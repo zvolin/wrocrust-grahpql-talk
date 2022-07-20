@@ -1,0 +1,4 @@
+_minted-talk
+/target
+talk.*
+!talk.tex
