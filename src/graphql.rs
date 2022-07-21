@@ -15,7 +15,6 @@ pub fn schema() -> GqlSchema {
         },
         Subscription { users_tx: tx },
     )
-    .data(Query)
     .data(data::users())
     .data(data::cars())
     .finish()
