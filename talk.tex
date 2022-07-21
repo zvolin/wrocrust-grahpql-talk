@@ -1,4 +1,4 @@
-\documentclass[notes]{beamer}
+\documentclass{beamer}
 \usepackage{minted}
 \usepackage{forest}
 
@@ -11,42 +11,19 @@
   \frame {
     \maketitle
   }
-  \frame {
+  \note {
     GraphQL is a powerful and strongly typed way to expose your services for the clients. It is more and more often seen in various backends.
 
     During this talk we will learn what is graphql and how to use it. We will play with it's basic features and try to create our own graphs of data.
   }
-  \frame {
+  \note {
     Not-really-sure-what developer trying to take Rust for everything. I'm currently working in SatRev, developing ground and flight software for managing nanosatellites.
     Also cats, linux and pizza lover.
   }
-  \frame {
+  \note {
     GraphQL is a query language for describing the resources you want to get and also all the machinery for executing those queries in your backend.
     It was created by facebook for their internal use and then open sourced in 2015.
     Since then it gained some popularity and was implemented in many popular programming languages.
-  }
-  \frame {
-    Server side crates:
-
-    \quad- \underline{async-graphql}
-
-    \quad- juniper
-
-    \vspace{0.5em}
-
-    \small{both integrates well with popular backend crates like actix-web, axum, rocket, warp...}
-
-    \vspace{2em}
-
-    Client side crates:
-
-    \quad- graphql\_client
-
-    \quad- cynic
-
-    \vspace{0.5em}
-
-    \small{you can choose from different designs of strong typing but subscriptions are not quite there yet}
   }
   \begin{frame}{Graphql Schema}
     \centering
@@ -56,16 +33,15 @@
           [users]
           [userById]
         ]
-        [Mutation
+        [Mutation (optional)
           [addUser]
           [removeUser]
         ]
-        [Subscription
+        [Subscription (optional)
           [userRegistered]
         ]
       ]
     \end{forest}
-    Those are just an async functions
   \end{frame}
   \begin{frame}[fragile]
     \scriptsize
@@ -241,13 +217,10 @@
     \begin{minted}{javascript}
       GET /users_with_cars ?
 
-      GET /cars_with_owners ?
+      GET /users?fields=name,surname ?
 
-      GET /users?format=short ?
-
-      GET /users?cars=true ?
-
-      GET /users?cars=true&format=short ???
+      GET /users?cars=true&fields=name,surname
+          &car_fields=brand,model ?
     \end{minted}
   \end{frame}
   \note {
@@ -257,5 +230,27 @@
 
     But this would be a complete mess when writing api documentation and having many different possible schemas returned from one endpoint
   }
-  \frame {}
+  \frame {
+    Server side crates:
+
+    \quad- \underline{async-graphql}
+
+    \quad- juniper
+
+    \vspace{0.5em}
+
+    \small{both integrates well with popular backend crates like actix-web, axum, rocket, warp...}
+
+    \vspace{2em}
+
+    Client side crates:
+
+    \quad- graphql\_client
+
+    \quad- cynic
+
+    \vspace{0.5em}
+
+    \small{you can choose from different designs of strong typing but subscriptions are not quite there yet}
+  }
 \end{document}
