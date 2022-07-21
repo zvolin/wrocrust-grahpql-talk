@@ -24,7 +24,7 @@ pub fn schema() -> GqlSchema {
 #[derive(Description)]
 pub struct Query;
 
-#[Object(use_type_description)]
+#[Object(use_type_description)] // to get the doc from Query type
 impl Query {
     /// Get all users registered in the service
     async fn users<'ctx>(
@@ -33,7 +33,7 @@ impl Query {
         #[graphql(desc = "Query at most this amount of users", default = 15)] limit: usize,
     ) -> Result<&'ctx [User]> {
         let users = ctx.data::<Users>()?;
-        let limit = std::cmp::max(limit, users.len());
+        let limit = std::cmp::min(limit, users.len());
         Ok(&users[..limit])
     }
 
